@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Article, GetTopPagesResponse } from '../types';
-import { getTopPagesUrl, RESULTS_OPTIONS } from '../utils/constants';
-import { NUMBER_OF_RESULTS, START_DATE } from '../utils/strings';
-import { getDatePickerOptions, getYesterday } from '../utils/utils';
-import DatePicker from './DatePicker';
+import { DEFAULT_NUM_RESULTS, getTopPagesUrl } from '../utils/constants';
+import { getYesterday } from '../utils/utils';
+import ControlInputs from './ControlInputs';
 import ResultList from './ResultList';
-import SelectInput from './SelectInput';
 
 const TopPages = () => {
   const [topPagesData, setTopPagesData] = useState<Article[]>([]);
   const [date, setDate] = useState<Date | null>(getYesterday());
-  const [numberOfResults, setNumberOfResults] = useState<number>(100);
+  const [numberOfResults, setNumberOfResults] =
+    useState<number>(DEFAULT_NUM_RESULTS);
 
   useEffect(() => {
     if (date !== null) {
@@ -30,7 +29,6 @@ const TopPages = () => {
     selectedDate: Date | null,
     event: React.SyntheticEvent<any> | undefined
   ): void => {
-    console.log(selectedDate);
     setDate(selectedDate);
   };
 
@@ -46,28 +44,12 @@ const TopPages = () => {
   return (
     <div className="top-pages-container">
       <div className="top-pages-wrapper">
-        <div className="top-pages-input">
-          <div className="input-item">
-            <div className="input-item-wrapper">
-              <label htmlFor="start-date">{START_DATE}</label>
-              <DatePicker
-                date={date}
-                onChange={handleDateChange}
-                {...getDatePickerOptions()}
-              />
-            </div>
-          </div>
-          <div className="input-item">
-            <div className="input-item-wrapper">
-              <label>{NUMBER_OF_RESULTS}</label>
-              <SelectInput
-                onChange={handleSelectChange}
-                options={RESULTS_OPTIONS}
-                selectedValue={numberOfResults}
-              />
-            </div>
-          </div>
-        </div>
+        <ControlInputs
+          date={date}
+          handleDateChange={handleDateChange}
+          handleSelectChange={handleSelectChange}
+          selectValue={numberOfResults}
+        />
         <ResultList results={displayedResults} />
       </div>
     </div>

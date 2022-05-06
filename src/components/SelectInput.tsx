@@ -1,12 +1,12 @@
 type Props = {
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   options: number[] | string[];
-  selectedValue: number | string;
+  value: number | string;
 };
 
-const SelectInput = ({ onChange, options, selectedValue }: Props) => {
+const SelectInput = ({ onChange, options, value }: Props) => {
   return (
-    <select value={selectedValue} onChange={onChange}>
+    <select value={value} onChange={onChange}>
       {options.map((option, index) => (
         <option key={`option-${index}`} value={option}>
           {option}
