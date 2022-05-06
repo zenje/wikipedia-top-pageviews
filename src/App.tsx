@@ -1,4 +1,4 @@
-import TopPages from './components/TopPages';
+import TopPages from './components/containers/TopPages';
 import { TITLE } from './utils/strings';
 
 function App() {

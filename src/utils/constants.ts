@@ -1,18 +1,8 @@
-const pad = (n: number, width: number, z?: string): string => {
-  z = z || '0';
-  let ns: string = n + '';
-  return ns.length >= width ? ns : new Array(width - ns.length + 1).join(z) + n;
-};
-
-const TOP_PAGES_BASE_URL =
+export const TOP_PAGES_BASE_URL =
   'https://wikimedia.org/api/rest_v1/metrics/pageviews/top/en.wikipedia/all-access';
 
-export const getTopPagesUrl = (date: Date): string => {
-  const day: string = pad(date.getDate(), 2);
-  const month: string = pad(date.getMonth() + 1, 2); // js month is 0-based
-  const year: string = date.getFullYear() as unknown as string;
-  return `${TOP_PAGES_BASE_URL}/${year}/${month}/${day}`;
-};
+export const TOP_PAGES_COUNTRY_BASE_URL =
+  'https://wikimedia.org/api/rest_v1/metrics/pageviews/top-per-country';
 
 export const DEFAULT_NUM_RESULTS: number = 100;
 

@@ -18,3 +18,8 @@ export type KeyLabelOption = {
 };
 
 export type SelectOption = KeyLabelOption | string | number;
+
+export type FetchConfig = {
+  url: string;
+  processData: (responseData: any) => any;
+};

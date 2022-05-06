@@ -1,6 +1,6 @@
-import { Article } from '../types';
-import { VIEWS } from '../utils/strings';
-import { cleanArticleTitle, formatNumber } from '../utils/utils';
+import { Article } from '../../types';
+import { VIEWS } from '../../utils/strings';
+import { cleanArticleTitle, formatNumber } from '../../utils/utils';
 
 type Props = Article;
 
