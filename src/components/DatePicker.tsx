@@ -1,14 +1,26 @@
-import { useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DatePicker = () => {
-  const [date, setDate] = useState<Date | null>(new Date());
+type Props = {
+  date: Date | null;
+  maxDate?: Date | null;
+  minDate?: Date | null;
+  onChange: (
+    date: Date | null,
+    event: React.SyntheticEvent<any> | undefined
+  ) => void;
+};
+
+const DatePicker = ({ date, maxDate, minDate, onChange }: Props) => {
   return (
-    <ReactDatePicker
-      selected={date}
-      onChange={(selectedDate) => setDate(selectedDate)}
-    />
+    <div className="date-picker-wrapper">
+      <ReactDatePicker
+        selected={date}
+        onChange={onChange}
+        minDate={minDate}
+        maxDate={maxDate}
+      />
+    </div>
   );
 };
 

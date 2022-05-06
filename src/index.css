@@ -82,6 +82,15 @@ header {
   width: 100%;
 }
 
+.react-datepicker-popper,
+.react-datepicker > * {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
 .results {
   display: flex;
   flex-direction: column;

@@ -1,6 +1,6 @@
 import { Article } from '../types';
 import { VIEWS } from '../utils/strings';
-import { cleanArticleTitle } from '../utils/utils';
+import { cleanArticleTitle, formatNumber } from '../utils/utils';
 
 type Props = Article;
 
@@ -14,7 +14,7 @@ const ResultItem = ({ article, views, rank }: Props) => {
       </div>
       <div className="result-item-right">
         <span>{VIEWS}</span>
-        <div>{views}</div>
+        <div>{formatNumber(views)}</div>
       </div>
     </div>
   );

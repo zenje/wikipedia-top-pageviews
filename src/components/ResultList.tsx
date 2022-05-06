@@ -8,8 +8,8 @@ type Props = {
 const ResultList = ({ results }: Props) => {
   return (
     <div className="results">
-      {results.map((result) => (
-        <ResultItem {...result} />
+      {results.map((result, index) => (
+        <ResultItem key={`item-${index}`} {...result} />
       ))}
     </div>
   );
