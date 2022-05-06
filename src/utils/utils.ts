@@ -1,4 +1,6 @@
 import { API_MIN_DATE as MIN_DATE } from './constants';
+import { COUNTRY_CODES } from './countryCodes';
+import { SelectOption } from '../types';
 
 export const cleanArticleTitle = (title: string) => {
   return title
@@ -8,8 +10,8 @@ export const cleanArticleTitle = (title: string) => {
 };
 
 export const formatNumber = (n: number) => {
-  return n.toLocaleString("en-US");
-}
+  return n.toLocaleString('en-US');
+};
 
 const getToday = (): Date => new Date();
 
@@ -24,4 +26,20 @@ export const getDatePickerOptions = (): { minDate: Date; maxDate: Date } => {
     minDate: MIN_DATE,
     maxDate: getYesterday(),
   };
+};
+
+export const getCountryOptions = (): SelectOption[] => {
+  const emptyOption: SelectOption = {
+    key: '',
+    label: '',
+  };
+  return [
+    emptyOption,
+    ...Object.keys(COUNTRY_CODES).map((countryCode) => {
+      return {
+        key: countryCode,
+        label: COUNTRY_CODES[countryCode],
+      };
+    }),
+  ];
 };

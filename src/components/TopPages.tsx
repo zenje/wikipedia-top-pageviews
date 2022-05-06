@@ -11,6 +11,7 @@ const TopPages = () => {
   const [date, setDate] = useState<Date | null>(getYesterday());
   const [numberOfResults, setNumberOfResults] =
     useState<number>(DEFAULT_NUM_RESULTS);
+  const [countryCode, setCountryCode] = useState<string>('');
 
   useEffect(() => {
     if (date !== null) {
@@ -32,7 +33,13 @@ const TopPages = () => {
     setDate(selectedDate);
   };
 
-  const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (
+  const handleCountryChange: React.ChangeEventHandler<HTMLSelectElement> = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    setCountryCode(event.target.value);
+  };
+
+  const handleNumResultsChange: React.ChangeEventHandler<HTMLSelectElement> = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
     const element = event.target as HTMLSelectElement;
@@ -45,10 +52,12 @@ const TopPages = () => {
     <div className="top-pages-container">
       <div className="top-pages-wrapper">
         <ControlInputs
+          countryValue={countryCode}
           date={date}
+          handleCountryChange={handleCountryChange}
           handleDateChange={handleDateChange}
-          handleSelectChange={handleSelectChange}
-          selectValue={numberOfResults}
+          handleNumResultsChange={handleNumResultsChange}
+          numResultsValue={numberOfResults}
         />
         <ResultList results={displayedResults} />
       </div>
