@@ -1,13 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import TopPages from './components/TopPages';
 
 function App() {
   return (
-    <div>
+    <>
+      <header>
+        <h2>{`Grow Take Home`}</h2>
+      </header>
       <TopPages />
-    </div>
+    </>
   );
 }
 

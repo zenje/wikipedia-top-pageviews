@@ -1,35 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { RESULTS_OPTIONS, URL } from '../constants';
 import { Article, GetTopPagesResponse } from '../types';
+import { RESULTS_OPTIONS, URL } from '../utils/constants';
+import { NUMBER_OF_RESULTS, START_DATE } from '../utils/strings';
+import DatePicker from './DatePicker';
+import ResultList from './ResultList';
+import SelectInput from './SelectInput';
 
-type Props = {};
-
-const ResultsDropdown = () => {
-  return (
-    <select>
-      {RESULTS_OPTIONS.map((option) => (
-        <option value={option}>{option}</option>
-      ))}
-    </select>
-  );
-};
-
-const Results = ({ results }: { results: Article[] }) => {
-  return (
-    <div>
-      {results.map((result) => (
-        <>
-          <div>{result.article}</div>
-          <div>{result.views}</div>
-          <div>{result.rank}</div>
-        </>
-      ))}
-    </div>
-  );
-};
-
-const TopPages = (props: Props) => {
+const TopPages = () => {
   const [topPagesData, setTopPagesData] = useState<Article[]>([]);
   const [numberOfResults, setNumberOfResults] = useState<number>(100);
 
@@ -47,9 +25,24 @@ const TopPages = (props: Props) => {
   const displayedResults = topPagesData.slice(0, numberOfResults);
 
   return (
-    <div>
-      <ResultsDropdown />
-      <Results results={displayedResults} />
+    <div className="top-pages-container">
+      <div className="top-pages-wrapper">
+        <div className="top-pages-input">
+          <div className="input-item">
+            <div className="input-item-wrapper">
+              <label htmlFor="start-date">{START_DATE}</label>
+              <DatePicker />
+            </div>
+          </div>
+          <div className="input-item">
+            <div className="input-item-wrapper">
+              <label>{NUMBER_OF_RESULTS}</label>
+              <SelectInput options={RESULTS_OPTIONS} />
+            </div>
+          </div>
+        </div>
+        <ResultList results={displayedResults} />
+      </div>
     </div>
   );
 };
