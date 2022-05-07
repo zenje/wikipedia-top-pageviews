@@ -4,7 +4,8 @@ import {
   TOP_PAGES_COUNTRY_BASE_URL,
 } from './constants';
 import { COUNTRY_CODES } from './countryCodes';
-import { Article, SelectOption } from '../types';
+import { Article, FetchConfig, SelectOption } from '../types';
+import { ERROR_MESSAGES } from './strings';
 
 export const cleanArticleTitle = (title: string) => {
   return title
@@ -67,15 +68,34 @@ export const processDataDefault = (responseData: any): Article[] => {
 };
 
 export const processDataForCountry = (responseData: any): Article[] => {
-    const { articles } = responseData.items[0];
-    return articles.map((article: any) => {
-      return {
-        article: article.article,
-        views: article.views_ceil,
-        rank: article.rank
-      };
-    });
-}
+  const { articles } = responseData.items[0];
+  return articles.map((article: any) => {
+    return {
+      article: article.article,
+      views: article.views_ceil,
+      rank: article.rank,
+    };
+  });
+};
+
+export const getFetchConfig = (
+  date: Date,
+  countryCode: string
+): FetchConfig => {
+  let url: string = countryCode
+    ? getTopPagesForCountryUrl(countryCode, date)
+    : getTopPagesUrl(date);
+  let processData = countryCode ? processDataForCountry : processDataDefault;
+  let getErrorMessage = () => {
+    return countryCode ? ERROR_MESSAGES.COUNTRY : ERROR_MESSAGES.GENERAL;
+  };
+  const fetchConfig = {
+    url,
+    processData,
+    getErrorMessage,
+  };
+  return fetchConfig;
+};
 
 function _pad(n: number, width: number, z?: string): string {
   z = z || '0';

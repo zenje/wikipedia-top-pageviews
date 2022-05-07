@@ -1,10 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { FetchConfig } from '../types';
 
 const useFetch = (config: FetchConfig | null) => {
   const [data, setData] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [errorResponse, setErrorResponse] = useState<
+    AxiosResponse | undefined | null
+  >(null);
 
   useEffect(() => {
     const fetchData = async (config: FetchConfig) => {
@@ -13,13 +17,24 @@ const useFetch = (config: FetchConfig | null) => {
         const { data } = await axios.get(url);
         const processedData = processData(data);
         setData(processedData);
-      } catch (error) {
+      } catch (error: Error | AxiosError | any) {
         console.error(error);
+        setHasError(true);
+        if (axios.isAxiosError(error)) {
+          const axiosError: AxiosError = error as AxiosError;
+          if (axiosError.response) {
+            // The client was given an error response (5xx, 4xx)
+            let response: AxiosResponse | undefined = error.response;
+            setErrorResponse(response);
+          }
+        }
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     if (config) {
+      setHasError(false);
       setLoading(true);
       fetchData(config);
     }
@@ -28,6 +43,8 @@ const useFetch = (config: FetchConfig | null) => {
   return {
     data,
     loading,
+    hasError,
+    errorResponse,
   };
 };
 

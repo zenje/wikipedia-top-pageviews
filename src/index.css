@@ -19,14 +19,21 @@ body {
 
 header {
   background: rgb(225, 225, 225);
-  padding: 2rem 1rem 1rem 2rem;
+  height: 5rem;
   letter-spacing: 0.1rem;
+}
+
+header h2 {
+  margin: 0;
+  padding-left: 2rem;
+  padding-top: 2rem;
 }
 
 .top-pages-container {
   width: 100%;
   display: flex;
   justify-content: center;
+  min-height: calc(100vh - 5rem);
 }
 
 .top-pages-wrapper {
@@ -35,7 +42,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 1rem;
 }
 
@@ -142,4 +149,19 @@ header {
   .result-item-right {
     display: none;
   }
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.loading-container span,
+.error-container span {
+  margin-top: 10rem;
 }

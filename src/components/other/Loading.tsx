@@ -1,7 +1,11 @@
 import { LOADING } from '../../utils/strings';
 
 const Loading = () => {
-  return <div>{LOADING}</div>;
+  return (
+    <div className="loading-container">
+      <span>{LOADING}</span>
+    </div>
+  );
 };
 
 export default Loading;

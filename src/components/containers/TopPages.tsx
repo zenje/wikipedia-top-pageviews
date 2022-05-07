@@ -2,13 +2,9 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { FetchConfig } from '../../types';
 import { DEFAULT_NUM_RESULTS } from '../../utils/constants';
-import {
-  getTopPagesForCountryUrl,
-  getTopPagesUrl,
-  getYesterday,
-  processDataDefault,
-  processDataForCountry
-} from '../../utils/utils';
+import { ERROR_MESSAGES } from '../../utils/strings';
+import { getFetchConfig, getYesterday } from '../../utils/utils';
+import ErrorContainer from '../other/ErrorContainer';
 import Loading from '../other/Loading';
 import ResultList from '../results/ResultList';
 import ControlInputs from './ControlInputs';
@@ -22,16 +18,8 @@ const TopPages = () => {
 
   useEffect(() => {
     if (date != null) {
-      let url: string = countryCode
-        ? getTopPagesForCountryUrl(countryCode, date)
-        : getTopPagesUrl(date);
-      let processData = countryCode
-        ? processDataForCountry
-        : processDataDefault;
-      setFetchConfig({
-        url,
-        processData,
-      });
+      const fetchConfig = getFetchConfig(date, countryCode);
+      setFetchConfig(fetchConfig);
     }
   }, [date, countryCode]);
 
@@ -62,10 +50,16 @@ const TopPages = () => {
       [setNumberOfResults]
     );
 
-  const { data, loading } = useFetch(fetchConfig);
+  let { data, loading, hasError } = useFetch(fetchConfig);
   let displayedResults: any[] = [];
-  if (Array.isArray(data)) {
-    displayedResults = data.slice(0, numberOfResults);
+  let errorMessage = fetchConfig?.getErrorMessage() ?? '';
+  if (!hasError && !loading && Array.isArray(data)) {
+    if (data.length >= 0) {
+      displayedResults = data.slice(0, numberOfResults);
+    } else {
+      hasError = true;
+      errorMessage = ERROR_MESSAGES.NO_RESULTS_FOUND;
+    }
   }
 
   return (
@@ -79,7 +73,13 @@ const TopPages = () => {
           handleNumResultsChange={handleNumResultsChange}
           numResultsValue={numberOfResults}
         />
-        {loading ? <Loading /> : <ResultList results={displayedResults} />}
+        {loading ? (
+          <Loading />
+        ) : hasError ? (
+          <ErrorContainer message={errorMessage} />
+        ) : (
+          <ResultList results={displayedResults} />
+        )}
       </div>
     </div>
   );
