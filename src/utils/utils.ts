@@ -1,5 +1,7 @@
 import { Article, FetchConfig, SelectOption } from '../types';
 import {
+  ALL_ACCESS,
+  ALLOW_ALL_ORIGIN,
   API_MIN_DATE as MIN_DATE,
   BASE_WIKIPEDIA_URL,
   TOP_PAGES_BASE_URL,
@@ -52,7 +54,7 @@ export const getCountryOptions = (): SelectOption[] => {
 
 export const getTopPagesUrl = (date: Date): string => {
   const { day, month, year }: DateParts = _getDateParts(date);
-  return `${TOP_PAGES_BASE_URL}/${year}/${month}/${day}`;
+  return `${TOP_PAGES_BASE_URL}/${year}/${month}/${day}${ALLOW_ALL_ORIGIN}`;
 };
 
 export const getTopPagesForCountryUrl = (
@@ -60,7 +62,7 @@ export const getTopPagesForCountryUrl = (
   date: Date
 ): string => {
   const { day, month, year }: DateParts = _getDateParts(date);
-  return `${TOP_PAGES_COUNTRY_BASE_URL}/${countryCode}/all-access/${year}/${month}/${day}`;
+  return `${TOP_PAGES_COUNTRY_BASE_URL}/${countryCode}/${ALL_ACCESS}/${year}/${month}/${day}${ALLOW_ALL_ORIGIN}`;
 };
 
 export const getWikipediaLink = (articleUrlSlug: string) => {
