@@ -1,10 +1,11 @@
+import { Article, FetchConfig, SelectOption } from '../types';
 import {
   API_MIN_DATE as MIN_DATE,
+  BASE_WIKIPEDIA_URL,
   TOP_PAGES_BASE_URL,
-  TOP_PAGES_COUNTRY_BASE_URL,
+  TOP_PAGES_COUNTRY_BASE_URL
 } from './constants';
 import { COUNTRY_CODES } from './countryCodes';
-import { Article, FetchConfig, SelectOption } from '../types';
 import { ERROR_MESSAGES } from './strings';
 
 export const cleanArticleTitle = (title: string) => {
@@ -60,6 +61,10 @@ export const getTopPagesForCountryUrl = (
 ): string => {
   const { day, month, year }: DateParts = _getDateParts(date);
   return `${TOP_PAGES_COUNTRY_BASE_URL}/${countryCode}/all-access/${year}/${month}/${day}`;
+};
+
+export const getWikipediaLink = (articleUrlSlug: string) => {
+  return `${BASE_WIKIPEDIA_URL}/${articleUrlSlug}`;
 };
 
 export const processDataDefault = (responseData: any): Article[] => {

@@ -78,7 +78,12 @@ const TopPages = () => {
         ) : hasError ? (
           <ErrorContainer message={errorMessage} />
         ) : (
-          <ResultList results={displayedResults} />
+          <ResultList
+            start={1}
+            end={displayedResults.length}
+            total={data.length}
+            results={displayedResults}
+          />
         )}
       </div>
     </div>
