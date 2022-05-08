@@ -10,7 +10,7 @@ type Props = {
 
 const ResultList = ({ end, start, total, results }: Props) => {
   return (
-    <div className="results-container">
+    <div className="results-container" id="results">
       <div className="results-info">{`${start} - ${end} of ${total}`}</div>
       {results.map((result, index) => (
         <ResultItem key={`item-${index}`} {...result} />

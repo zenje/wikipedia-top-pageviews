@@ -29,6 +29,11 @@ export const getYesterday = (): Date => {
   return yesterday;
 };
 
+export const getFormattedDate = (date: Date): string => {
+  const { day, month, year }: DateParts = _getDateParts(date);
+  return month + '/' + day + '/' + year;
+}
+
 export const getDatePickerOptions = (): { minDate: Date; maxDate: Date } => {
   return {
     minDate: MIN_DATE,

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { KeyLabelOption, SelectOption } from '../../types';
 
 type Props = {
-  name?: string;
+  id: string;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   options: SelectOption[];
   value: number | string;
@@ -21,7 +21,7 @@ const CustomOption = ({ option }: { option: SelectOption }): JSX.Element => {
   }
 };
 
-const SelectInput = ({ onChange, options, value, name }: Props) => {
+const SelectInput = ({ onChange, options, value, id }: Props) => {
   const memoOptions: any = useMemo(() => {
     const getOptions = () => (
       <>
@@ -34,7 +34,7 @@ const SelectInput = ({ onChange, options, value, name }: Props) => {
   }, []);
 
   return (
-    <select value={value} onChange={onChange}>
+    <select id={id} value={value} onChange={onChange}>
       {memoOptions}
     </select>
   );

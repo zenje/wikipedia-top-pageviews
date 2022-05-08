@@ -19,13 +19,13 @@ const ResultItem = ({ article, views, rank }: Props) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            {cleanArticleTitle(article)}
+            {article && cleanArticleTitle(article)}
           </a>
         </div>
       </div>
       <div className="result-item-right">
         <span>{VIEWS}</span>
-        <div>{formatNumber(views)}</div>
+        <div>{views && formatNumber(views)}</div>
       </div>
     </div>
   );

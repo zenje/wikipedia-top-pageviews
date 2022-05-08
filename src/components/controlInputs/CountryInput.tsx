@@ -16,10 +16,10 @@ const CountryInput = ({ onChange, options, value }: any) => {
   return (
     <ControlInput label={COUNTRY} labelHtmlFor="country">
       <MemoSelectInput
+        id="country"
         onChange={onChange}
         options={options}
         value={value}
-        name="country"
       />
     </ControlInput>
   );

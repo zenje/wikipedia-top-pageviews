@@ -14,7 +14,8 @@ const useFetch = (config: FetchConfig | null) => {
     const fetchData = async (config: FetchConfig) => {
       try {
         const { url, processData } = config;
-        const { data } = await axios.get(url);
+        const result = await axios.get(url);
+        const { data } = result;
         const processedData = processData(data);
         setData(processedData);
       } catch (error: Error | AxiosError | any) {
@@ -32,7 +33,6 @@ const useFetch = (config: FetchConfig | null) => {
         setLoading(false);
       }
     };
-
     if (config) {
       setHasError(false);
       setLoading(true);

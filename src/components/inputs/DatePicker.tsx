@@ -3,6 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 type Props = {
   date: Date | null;
+  id: string;
   maxDate?: Date | null;
   minDate?: Date | null;
   onChange: (
@@ -11,10 +12,11 @@ type Props = {
   ) => void;
 };
 
-const DatePicker = ({ date, maxDate, minDate, onChange }: Props) => {
+const DatePicker = ({ date, id, maxDate, minDate, onChange }: Props) => {
   return (
     <div className="date-picker-wrapper">
       <ReactDatePicker
+        id={id}
         selected={date}
         onChange={onChange}
         minDate={minDate}

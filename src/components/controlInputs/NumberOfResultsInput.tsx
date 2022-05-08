@@ -16,10 +16,10 @@ const NumberOfResultsInput = ({ onChange, options, value }: Props) => {
   return (
     <ControlInput label={NUMBER_OF_RESULTS} labelHtmlFor="number-of-results">
       <MemoSelectInput
+        id="number-of-results"
         onChange={onChange}
         options={options}
         value={value}
-        name="number-of-results"
       />
     </ControlInput>
   );

@@ -17,7 +17,7 @@ const MemoDatePicker = memo(DatePicker);
 const DateInput = ({ date, onChange, datePickerOptions }: Props) => {
   return (
     <ControlInput label={START_DATE} labelHtmlFor="start-date">
-      <MemoDatePicker date={date} onChange={onChange} {...datePickerOptions} />
+      <MemoDatePicker id="start-date" date={date} onChange={onChange} {...datePickerOptions} />
     </ControlInput>
   );
 };

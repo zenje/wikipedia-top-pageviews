@@ -54,7 +54,7 @@ const TopPages = () => {
   let displayedResults: any[] = [];
   let errorMessage = fetchConfig?.getErrorMessage() ?? '';
   if (!hasError && !loading && Array.isArray(data)) {
-    if (data.length >= 0) {
+    if (data && data.length > 0) {
       displayedResults = data.slice(0, numberOfResults);
     } else {
       hasError = true;
