@@ -10,22 +10,19 @@ import ResultList from '../results/ResultList';
 import ControlInputs from './ControlInputs';
 
 const TopPages = () => {
-  const [date, setDate] = useState<Date | null>(getYesterday());
+  const [date, setDate] = useState<Date>(getYesterday());
   const [numberOfResults, setNumberOfResults] =
     useState<number>(DEFAULT_NUM_RESULTS);
   const [countryCode, setCountryCode] = useState<string>('');
   const [fetchConfig, setFetchConfig] = useState<FetchConfig | null>(null);
 
   useEffect(() => {
-    if (date != null) {
-      const fetchConfig = getFetchConfig(date, countryCode);
-      setFetchConfig(fetchConfig);
-    }
+    setFetchConfig(getFetchConfig(date, countryCode));
   }, [date, countryCode]);
 
   const handleDateChange = useCallback(
     (
-      selectedDate: Date | null,
+      selectedDate: Date,
       event: React.SyntheticEvent<any> | undefined
     ): void => {
       setDate(selectedDate);

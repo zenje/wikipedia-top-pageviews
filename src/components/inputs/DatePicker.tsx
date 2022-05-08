@@ -2,14 +2,11 @@ import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 type Props = {
-  date: Date | null;
+  date: Date;
   id: string;
   maxDate?: Date | null;
   minDate?: Date | null;
-  onChange: (
-    date: Date | null,
-    event: React.SyntheticEvent<any> | undefined
-  ) => void;
+  onChange: (date: Date, event: React.SyntheticEvent<any> | undefined) => void;
 };
 
 const DatePicker = ({ date, id, maxDate, minDate, onChange }: Props) => {

@@ -7,10 +7,10 @@ import NumberOfResultsInput from '../controlInputs/NumberOfResultsInput';
 
 type ControlInputsProps = {
   countryValue?: string;
-  date: Date | null;
+  date: Date;
   handleCountryChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleDateChange: (
-    date: Date | null,
+    date: Date,
     event: React.SyntheticEvent<any> | undefined
   ) => void;
   handleNumResultsChange: (event: ChangeEvent<HTMLSelectElement>) => void;
