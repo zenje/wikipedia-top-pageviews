@@ -2,6 +2,7 @@ export type Article = {
   article: string;
   views: number;
   rank: number;
+  project?: string;
 };
 
 export type GetTopPagesResponse = {

@@ -8,14 +8,14 @@ import {
 
 type Props = Article;
 
-const ResultItem = ({ article, views, rank }: Props) => {
+const ResultItem = ({ article, views, rank, project }: Props) => {
   return (
     <div className="result-item">
       <div className="result-item-left">
         <span className="rank">{rank}</span>
         <div className="result-item-left-text">
           <a
-            href={getWikipediaLink(article)}
+            href={getWikipediaLink(article, project)}
             target="_blank"
             rel="noreferrer noopener"
           >

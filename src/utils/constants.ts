@@ -4,7 +4,8 @@ export const TOP_PAGES_BASE_URL =
 export const TOP_PAGES_COUNTRY_BASE_URL =
   'https://wikimedia.org/api/rest_v1/metrics/pageviews/top-per-country';
 
-export const BASE_WIKIPEDIA_URL = 'https://en.wikipedia.org/wiki';
+export const getBaseWikipediaUrl = (project: string = 'en.wikipedia') =>
+  `https://${project}.org/wiki`;
 
 export const ALL_ACCESS = 'all-access';
 // Per Wikipedia API: For anonymous requests, origin query string parameter

@@ -3,9 +3,9 @@ import {
   ALL_ACCESS,
   ALLOW_ALL_ORIGIN,
   API_MIN_DATE as MIN_DATE,
-  BASE_WIKIPEDIA_URL,
+  getBaseWikipediaUrl,
   TOP_PAGES_BASE_URL,
-  TOP_PAGES_COUNTRY_BASE_URL
+  TOP_PAGES_COUNTRY_BASE_URL,
 } from './constants';
 import { COUNTRY_CODES } from './countryCodes';
 import { ERROR_MESSAGES } from './strings';
@@ -32,7 +32,7 @@ export const getYesterday = (): Date => {
 export const getFormattedDate = (date: Date): string => {
   const { day, month, year }: DateParts = _getDateParts(date);
   return month + '/' + day + '/' + year;
-}
+};
 
 export const getDatePickerOptions = (): { minDate: Date; maxDate: Date } => {
   return {
@@ -70,8 +70,8 @@ export const getTopPagesForCountryUrl = (
   return `${TOP_PAGES_COUNTRY_BASE_URL}/${countryCode}/${ALL_ACCESS}/${year}/${month}/${day}${ALLOW_ALL_ORIGIN}`;
 };
 
-export const getWikipediaLink = (articleUrlSlug: string) => {
-  return `${BASE_WIKIPEDIA_URL}/${articleUrlSlug}`;
+export const getWikipediaLink = (articleUrlSlug: string, project?: string) => {
+  return `${getBaseWikipediaUrl(project)}/${articleUrlSlug}`;
 };
 
 export const processDataDefault = (responseData: any): Article[] => {
@@ -86,6 +86,7 @@ export const processDataForCountry = (responseData: any): Article[] => {
       article: article.article,
       views: article.views_ceil,
       rank: article.rank,
+      project: article.project,
     };
   });
 };
