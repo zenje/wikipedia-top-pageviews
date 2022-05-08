@@ -24,7 +24,7 @@ export const formatNumber = (n: number) => {
 const getToday = (): Date => new Date();
 
 export const getYesterday = (): Date => {
-  const yesterday = new Date(getToday());
+  const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   return yesterday;
 };

@@ -7,7 +7,6 @@ Live demo: [https://popular-on-wikipedia.herokuapp.com/](https://popular-on-wiki
 _(**Notes**: Heroku takes some time to load. Requests to Wikipedia's API may be blocked on certain browsers, or by browser ad blockers; this will prevent the app from loading results.)_
 
 ## Running the app
-
 #### Install dependencies:
 ```
 npm install
@@ -20,16 +19,26 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view app in development mode.
 
-#### Run all tests in watch mode:
+## Running tests
+#### Run all tests (React Testing Library / Jest):
 ```
 npm test
 ```
 
-This project focuses on integration testing to verify core functionality.
+#### Run all tests (React Testing Library / Jest) in watch mode:
+```
+npm run test-watch
+```
+
+#### Run all end-to-end tests (Cypress):
+```
+npm run cypress
+```
+
+Ensure that `npm start` is running, so that tests can interact with the app that's running locally.
 
 ## About
-
 ### Technologies used
 - React, TypeScript
-- @testing-library, jest
+- @testing-library, Jest, Cypress
 - [react-datepicker](https://reactdatepicker.com/)

@@ -2,12 +2,12 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios, { AxiosResponse } from 'axios';
 import { Article } from '../../types';
-import { DEFAULT_NUM_RESULTS } from '../../utils/constants';
+import { DEFAULT_NUM_RESULTS, API_MIN_DATE } from '../../utils/constants';
 import {
   COUNTRY,
   ERROR_MESSAGES,
   NUMBER_OF_RESULTS,
-  START_DATE
+  START_DATE,
 } from '../../utils/strings';
 import {
   cleanArticleTitle,
@@ -15,7 +15,7 @@ import {
   getTopPagesForCountryUrl,
   getTopPagesUrl,
   getWikipediaLink,
-  getYesterday
+  getYesterday,
 } from '../../utils/utils';
 import TopPages from './TopPages';
 
@@ -159,7 +159,7 @@ describe('TopPages - initial state', () => {
 
 describe('TopPages - changing input control values', () => {
   it('select a date, fetch data for new date', async () => {
-    mockAxiosWithResolvedValues(MOCK_DATA1, MOCK_DATA2);
+    mockAxiosWithResolvedValues(MOCK_DATA1, MOCK_DATA2, MOCK_DATA2, MOCK_DATA2);
     render(<TopPages />);
 
     // assert inital date input value
@@ -171,22 +171,44 @@ describe('TopPages - changing input control values', () => {
     let resultsNodes = await waitFor(() => screen.getAllByRole('link'));
     expect(resultsNodes.length).toBe(MOCK_DATA1.items[0].articles.length);
 
-    // change the date input
-    const newDate = new Date(2022, 4, 1); // 05/01/2022
-    const newDateFormatted: string = getFormattedDate(newDate);
-    fireEvent.change(dateInput, { target: { value: newDateFormatted } });
-    expect(dateInput.value).toBe(newDateFormatted);
+    // change the date input to valid date
+    const newDate1 = new Date(2022, 4, 1); // 05/01/2022
+    const newDateFormatted1: string = getFormattedDate(newDate1);
+    fireEvent.change(dateInput, { target: { value: newDateFormatted1 } });
+    expect(dateInput.value).toBe(newDateFormatted1);
 
     // wait for axios requests to resolve and update the component with mock results
     resultsNodes = await waitFor(() => screen.getAllByRole('link'));
     expect(resultsNodes.length).toBe(MOCK_DATA2.items[0].articles.length);
 
-    // assert that data was fetched twice, with initial and new date urls
+    // change the date input to be invalid (< min date)
+    const newDate2 = new Date(1900, 4, 1); // 05/01/1900
+    const newDateFormatted2: string = getFormattedDate(newDate2);
+    fireEvent.change(dateInput, { target: { value: newDateFormatted2 } });
+
+    // change the date input to be invalid (> max date)
+    const newDate3 = new Date();
+    newDate3.setDate(newDate3.getDate() + 100); // 100 days from today
+    const newDateFormatted3: string = getFormattedDate(newDate3);
+    fireEvent.change(dateInput, { target: { value: newDateFormatted3 } });
+
+    // change the date input to valid date (min date)
+    const newDate4 = API_MIN_DATE;
+    const newDateFormatted4: string = getFormattedDate(newDate4);
+    fireEvent.change(dateInput, { target: { value: newDateFormatted4 } });
+
+    // wait for axios requests to resolve and update the component with mock results
+    resultsNodes = await waitFor(() => screen.getAllByRole('link'));
+    expect(resultsNodes.length).toBe(MOCK_DATA2.items[0].articles.length);
+
+    // assert that data was fetched 3 times, with initial and new date urls, ignoring invalid dates
     const url1 = getTopPagesUrl(YESTERDAY);
-    const url2 = getTopPagesUrl(newDate);
-    expect(axios.get).toHaveBeenCalledTimes(2);
-    expect(axios.get).toBeCalledWith(url1);
-    expect(axios.get).toBeCalledWith(url2);
+    const url2 = getTopPagesUrl(newDate1);
+    const url3 = getTopPagesUrl(newDate4);
+    expect(axios.get).toHaveBeenCalledTimes(3);
+    expect(axios.get).toHaveBeenNthCalledWith(1, url1);
+    expect(axios.get).toHaveBeenNthCalledWith(2, url2);
+    expect(axios.get).toHaveBeenNthCalledWith(3, url3);
   });
 
   it('select a country, fetch data for new country', async () => {
@@ -223,9 +245,9 @@ describe('TopPages - changing input control values', () => {
     const url1 = getTopPagesUrl(YESTERDAY);
     const url2 = getTopPagesForCountryUrl('JP', YESTERDAY);
     expect(axios.get).toHaveBeenCalledTimes(3);
-    expect(axios.get).toBeCalledWith(url1);
-    expect(axios.get).toBeCalledWith(url2);
-    expect(axios.get).lastCalledWith(url1);
+    expect(axios.get).toHaveBeenNthCalledWith(1, url1);
+    expect(axios.get).toHaveBeenNthCalledWith(2, url2);
+    expect(axios.get).toHaveBeenNthCalledWith(3, url1);
   });
 
   it('change the number of results displayed', async () => {
