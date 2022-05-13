@@ -31,7 +31,7 @@ const SelectInput = ({ onChange, options, value, id }: Props) => {
       </>
     );
     return getOptions();
-  }, []);
+  }, [options]);
 
   return (
     <select id={id} value={value} onChange={onChange}>

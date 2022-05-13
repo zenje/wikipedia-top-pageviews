@@ -10,12 +10,10 @@ type Props = {
   value: string;
 };
 
-const MemoSelectInput = memo(SelectInput);
-
-const CountryInput = ({ onChange, options, value }: any) => {
+const CountryInput = ({ onChange, options, value }: Props) => {
   return (
     <ControlInput label={COUNTRY} labelHtmlFor="country">
-      <MemoSelectInput
+      <SelectInput
         id="country"
         onChange={onChange}
         options={options}

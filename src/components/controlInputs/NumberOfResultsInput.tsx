@@ -10,12 +10,10 @@ type Props = {
   value: number;
 };
 
-const MemoSelectInput = memo(SelectInput);
-
 const NumberOfResultsInput = ({ onChange, options, value }: Props) => {
   return (
     <ControlInput label={NUMBER_OF_RESULTS} labelHtmlFor="number-of-results">
-      <MemoSelectInput
+      <SelectInput
         id="number-of-results"
         onChange={onChange}
         options={options}
